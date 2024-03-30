@@ -34,7 +34,11 @@ First head over to https://www.arduino.cc/en/software and download the Arduino I
 
 Once in the IDE, go to the boards manager and install the driver for the ESP8266 board. Then, go to the library manager and install the "LiquidCrystal" and "ArduinoJson" libraries. Make sure the names are exactly the same.  
 
-Now, create a new sketch and copy and paste the code from display.ino into your sketch. At the top of the code you should see a section where you need to put in some of your own information to get the code to work. First put in the name and password of your Wifi network and then the ID of your league using the table below:  
+Now, create a new sketch and copy and paste the code from display.ino into your sketch. At the top of the code you should see a section where you need to put in some of your own information to get the code to work:  
+
+<img src="images/image3.png" alt="drawing" width="400"/>
+
+First put in the name and password of your Wifi network and then the ID of your league using the table below:  
 
 | League      | ID |
 | ----------- | ----------- |
