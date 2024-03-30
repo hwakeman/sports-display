@@ -1,4 +1,6 @@
-# Create your own live sports display for only $29!  
+# Create your own live sports display for only $29!
+
+Have you ever wanted a live sports display for your home but didn't want to spend more than $100 to do so? This cheap sports display will display your favorite team's most recent game at all times, including live scores that update every 10 minutes! Below are instructions to setup your own live sports display.
 
 ## 1. Purchase the components
 
