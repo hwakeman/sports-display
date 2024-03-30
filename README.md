@@ -12,6 +12,8 @@ You will also need a way to plug the ESP8266 (Micro USB) into your PC or Laptop 
 
 Now that you have what you need, you need to connect the display and the wifi chip in a way that they can communicate with each other. First, plug the pins of the ESP8266 into the breadboard, leaving room for the jumper cables to be plugged in on the bottom and top of the breadboard, like so:  
 
+<img src="images/image1.jpg" alt="drawing" width="400"/>
+
 Next, get four individual jumper cables and use the following instructions to plug the LCD1602 display into the ESP8266. For each cable plug the female side into the LCD and the male side into the breadboard above or below the corresponding label on the ESP8266.
 
 (LCD1602) GND ---> GND (ESP8266)  
@@ -20,6 +22,8 @@ Next, get four individual jumper cables and use the following instructions to pl
 (LCD1602) SCL ---> D1 (ESP8266)  
 
 Your circuit should look something like this:  
+
+<img src="images/image2.jpg" alt="drawing" width="400"/>
 
 Now just plug in the ESP8266 into your laptop and the circuit is complete!
 ## 3. Install the code
