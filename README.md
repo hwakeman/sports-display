@@ -1,6 +1,6 @@
 # Create your own live sports display for only $29!
 
-Have you ever wanted a live sports display for your home but didn't want to spend more than $100 to do so? This cheap sports display will display your favorite team's most recent game at all times, including live scores that update every 10 minutes! Below are instructions to setup your own live sports display.
+Have you ever wanted a live sports display for your home but didn't want to spend more than $100 to do so? This cheap sports display will display your favorite team's most recent game at all times, including live scores that update as often as you want! Below are instructions to setup your own live sports display.
 
 ## 1. Purchase the components
 
@@ -51,6 +51,12 @@ First put in the name and password of your Wifi network and then the ID of your 
 
 For the teamIndex, look up your league's teams in alphabetical order and find where your team is in the list. Keep in mind that indexes start at 0 so if your team is say, 17th in the list, you should type 16 into the code.  
 
+Lastly, put in how often you want the scores to update in minutes
+
 Verify the code using the checkmark button and then upload the code to the ESP8266 using the arrow button. It will take a second.  
 
 Once the code is done uploading, the setup is complete! All you need to do now is plug the ESP8266 into a wall outlet and find a good spot to put your scoreboard!
+
+Note: If you find that the characters on the display are too dark, you can use a small Phillips-Head screwdriver to adjust the blue potentiometer on the back of the display.  
+
+Note: Premier League and NFL scores may not work properly if API limits are reached.
