@@ -6,14 +6,17 @@
 // THESE ARE THE VALUES THAT MUST BE CHANGED
 
 // WiFi credentials
-char ssid[] = "NAME OF YOUR WIFI";
-char password[] = "PASSWORD OF YOUR WIFI";
+char ssid[] = "";
+char password[] = "";
 
 // Index of the sport (Check README for your sport's number)
-int apiIndex = 2;
+int apiIndex = 0;
 
 // Index of the team (Check README for your team's number)
-int teamIndex = 31;
+int teamIndex = 0;
+
+// How often you want the scores to update in minutes
+const long minutes = 5;
 
 ////////////////////////////////////////////
 
@@ -38,9 +41,9 @@ const int lcd_columns = 16;
 const int lcd_rows = 2;
 LiquidCrystal_I2C lcd(i2c_address, lcd_columns, lcd_rows);
 
-void setup() {
-  Serial.begin(115200);
+const long interval = 60000 * minutes;
 
+void setup() {
   client.setInsecure();
 
   lcd.init();
@@ -51,19 +54,23 @@ void setup() {
   WiFi.disconnect();
   delay(100);
 
-  Serial.print("Connecting Wifi: ");
-  Serial.println(ssid);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
     delay(500);
   }
-  Serial.println("WiFi connected");
+
+  makeHTTPRequest();
 }
 
 void loop() {
-  makeHTTPRequest();
-  delay(600000);
+  static unsigned long previousMillis = 0;
+
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    makeHTTPRequest();
+    previousMillis = currentMillis;
+  }
 }
 
 void printScores(String homeName, String awayName, int homeScore, int awayScore) {
@@ -116,7 +123,10 @@ void makeHTTPRequest() {
   client.println(apiKeys[apiIndex]);
 
   if (client.println() == 0) {
-    Serial.println(F("Failed to send request"));
+    lcd.setCursor(0, 0);
+    lcd.print("Connection");
+    lcd.setCursor(0, 1);
+    lcd.print("Error");
     return;
   }
 
@@ -124,8 +134,10 @@ void makeHTTPRequest() {
   client.readBytesUntil('\r', status, sizeof(status));
 
   if (strstr(status, "200") == NULL) {
-    Serial.print(F("Unexpected response: "));
-    Serial.println(status);
+    lcd.setCursor(0, 0);
+    lcd.print("Connection");
+    lcd.setCursor(0, 1);
+    lcd.print("Error");
     return;
   }
 
@@ -136,7 +148,6 @@ void makeHTTPRequest() {
 
   while (client.available()) {
     String payload = client.readString();
-    Serial.print(payload);
     DynamicJsonDocument doc(43000);
     DeserializationError error = deserializeJson(doc, payload);
     JsonObject root = doc.as<JsonObject>();
