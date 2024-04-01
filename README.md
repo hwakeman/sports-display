@@ -29,14 +29,14 @@ Your circuit should look something like this:
 
 <img src="images/image2.jpg" alt="drawing" width="400"/>
 
-Now just plug in the ESP8266 into your laptop and the circuit is complete!
+Now just plug in the ESP8266 into your device and the circuit is complete!
 ## 3. Install the code
 
 Now all that's left is to install the necessary code onto the ESP8266 so that it can retrieve live data.  
 
 First head over to https://www.arduino.cc/en/software and download the Arduino IDE onto your machine.  
 
-Once in the IDE, go to the boards manager and install the driver for the ESP8266 board. Then, go to the library manager and install the "LiquidCrystal" and "ArduinoJson" libraries. Make sure the names are exactly the same.  
+Once in the IDE, go to the boards manager and install the driver for the ESP8266 board. Then, go to the library manager and install the "LiquidCrystal", "NTPClient" and "ArduinoJson" libraries. Make sure the names are exactly the same.  
 
 Now, create a new sketch and copy and paste the code from display.ino into your sketch. At the top of the code you should see a section where you need to put in some of your own information to get the code to work:  
 
@@ -46,16 +46,16 @@ First put in the name and password of your Wifi network and then the ID of your 
 
 | League      | ID |
 | ----------- | ----------- |
-| Premier League      | 0       |
-| MLB   | 1        |
-| NHL   | 2        |
-| NFL   | 3        |
-| NBA   | 4        |
+| Premier League | 0 |
+| MLB | 1 |
+| NHL | 2 |
+| NFL | 3 |
+| NBA | 4 |
 
 For the teamIndex, use the following tables and look up your team's index:
 
 ##  Premier League
-NOTE: Premier League teams change annually, so this table may be outdated. You may need to set teamIndex to 0, go down in the code and change the "57" in the top left of teamIds to your teams id for the football-data.org API.
+NOTE: Premier League teams change annually, so this table may be outdated. You may need to set teamIndex to 0, go down in the code and change the "57" in the top left of teamIds to your teams id for the football-data.org API. I've found that ChatGPT is very helpful for finding team IDs of this API.
 |Arsenal|Aston Villa|Brentford|Brighton and Hove Albion|Bournemouth|Burnley|Chelsea|Crystal Palace|Everton|Fulham|Liverpool|Luton Town|Manchester City|Manchester United|Newcastle United|Nottingham Forest|Sheffield United|Tottenham Hotspur|West Ham United|Wolverhampton Wanderers|
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 |0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|
@@ -87,6 +87,6 @@ Verify the code using the checkmark button and then upload the code to the ESP82
 
 Once the code is done uploading, the setup is complete! All you need to do now is plug the ESP8266 into a wall outlet and find a good spot to put your scoreboard!
 
-Note: If you find that the characters on the display are too dark, you can use a small Phillips-Head screwdriver to adjust the blue potentiometer on the back of the display.  
+NOTE: If you find that the characters on the display are too dark, you can use a small Phillips-Head screwdriver to adjust the blue potentiometer on the back of the display.  
 
-Note: Premier League and NFL scores may not work properly if API limits are reached.
+NOTE: Premier League and NFL scores may not work properly if API limits are reached.
