@@ -1,35 +1,33 @@
-# Create your own live sports display for only $29!
+# Create your own live sports display for only $25!
 
 Features functionality for Premier League, NFL, NBA, NHL, and MLB!
 
-Have you ever wanted a live sports display for your home but didn't want to spend more than $100 to do so? This cheap sports display will display your favorite team's most recent game at all times, including live scores that update as often as you want! Below are instructions to setup your own live sports display.
+Have you ever wanted a live sports display for your home but didn't want to spend more than $100 to do so? This cheap sports display will display your favorite team's most recent game at all times, including live scores that update as often as you want! Below are instructions to setup your own live sports display.  
+
+<img src="images/example1.png" alt="drawing" width="400"/>  <img src="images/example2.png" alt="drawing" width="400"/>
 
 ## 1. Purchase the components
 
   - ESP8266 - https://a.co/d/5UX7qJE ($8)  
-  - LCD1602 w/ I2C Adapter - https://a.co/d/3oDtrIQ ($10)  
-  - Breadboard - https://a.co/d/dr5yXGj ($7)    
-  - Jumper Wires - https://a.co/d/gr8gANY ($4)
+  - LCD1602 w/ I2C Adapter - https://a.co/d/3oDtrIQ ($10)   
+  - Jumper Wires - https://a.co/d/0fhZzm1 ($7)
 
 You will also need a way to plug the ESP8266 (Micro USB) into your PC or Laptop and into a wall once setup is complete.
+
 ## 2. Create the circuit
 
-Now that you have what you need, you need to connect the display and the wifi chip in a way that they can communicate with each other. First, plug the pins of the ESP8266 into the breadboard, leaving room for the jumper cables to be plugged in on the bottom and top of the breadboard, like so:  
-
-<img src="images/image1.jpg" alt="drawing" width="400"/>
-
-Next, get four individual jumper cables and use the following instructions to plug the LCD1602 display into the ESP8266. For each cable plug the female side into the LCD and the male side into the breadboard above or below the corresponding label on the ESP8266.
+Now that you have what you need, you need to connect the display and the wifi chip in a way that they can communicate with each other. Use the following instructions to connect the two using four of the jumper wires.
 
 (LCD1602) GND ---> GND (ESP8266)  
 (LCD1602) VCC ---> VIN (ESP8266)    
 (LCD1602) SDA --> D2 (ESP8266)    
 (LCD1602) SCL ---> D1 (ESP8266)  
 
-Your circuit should look something like this:  
+Afterwards, your simple circuit should look like this:  
 
-<img src="images/image2.jpg" alt="drawing" width="400"/>
+<img src="images/circuit.png" alt="image of a simple arduino circuit" width="400"/>
 
-Now just plug in the ESP8266 into your device and the circuit is complete!
+Now, just plug the ESP8266 into your device and your circuit is complete!
 ## 3. Install the code
 
 Now all that's left is to install the necessary code onto the ESP8266 so that it can retrieve live data.  
@@ -40,7 +38,7 @@ Once in the IDE, go to the boards manager and install the driver for the ESP8266
 
 Now, create a new sketch and copy and paste the code from display.ino into your sketch. At the top of the code you should see a section where you need to put in some of your own information to get the code to work:  
 
-<img src="images/image3.png" alt="drawing" width="400"/>
+<img src="images/code.png" alt="image of some code" width="400"/>
 
 First put in the name and password of your Wifi network and then the ID of your league using the table below:  
 
