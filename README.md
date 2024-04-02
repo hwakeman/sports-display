@@ -4,7 +4,7 @@ Features functionality for Premier League, NFL, NBA, NHL, and MLB!
 
 Have you ever wanted a live sports display for your home but didn't want to spend more than $100 to do so? This cheap sports display will display your favorite team's most recent game at all times, including live scores that update as often as you want! Below are instructions to setup your own live sports display.  
 
-<img src="images/example1.png" alt="drawing" width="400"/>  <img src="images/example2.png" alt="drawing" width="400"/>
+<img src="images/example1.png" alt="image of working scoreboard" width="400"/>  <img src="images/example2.png" alt="image of working scoreboard" width="400"/>
 
 ## 1. Purchase the components
 
