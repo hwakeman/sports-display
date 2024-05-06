@@ -39,8 +39,8 @@ int teamIds[5][32] = {
 
 const char* baseUrls[] = {"api.football-data.org", "statsapi.mlb.com", "api-web.nhle.com", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com", "api.balldontlie.io"};
 const char* apiKeys[] = {"9b058c7bb14b4b48bde465ad8783823b", "none", "none", "8397916b8dmshc4fe775ebddd378p1c43ffjsn577a3cae20a4", "6ac6a384-ff48-4c6a-9a60-9c4103f6638c"};
-const char* firstHalfQueries[] = {"/v4/teams/", "/api/v1/schedule/games/?sportId=1&teamId=", "/v1/scoreboard/", "/getNFLTeamSchedule?teamID=", "/v1/games?team_ids[]="};
-const char* secondHalfQueries[] = {"/matches?status=FINISHED,IN_PLAY&limit=1", "", "/now", "", ""};
+const char* firstHalfQueries[] = {"/v4/teams/", "/api/v1/schedule/games/?sportId=1&teamId=", "/v1/club-schedule/", "/getNFLTeamSchedule?teamID=", "/v1/games?team_ids[]="};
+const char* secondHalfQueries[] = {"/matches?status=FINISHED,IN_PLAY&limit=1", "", "/week/", "", ""};
 const char* apiNames[] = {"Premier League", "MLB", "NHL", "NFL", "NBA"};
 
 const int i2c_address = 0x27;
@@ -52,6 +52,7 @@ const long interval = 60000 * minutes;
 
 void setup() {
   client.setInsecure();
+  Serial.begin(115200);
 
   lcd.init();
   lcd.backlight();
@@ -97,6 +98,17 @@ void makeHTTPRequest() {
     request += teamIds[apiIndex][teamIndex % getEffectiveLength(teamIds[apiIndex], 32)];
   }
   request += secondHalfQueries[apiIndex];
+
+  if(apiIndex == 2) {
+    timeClient.update();
+    unsigned long epochTime = timeClient.getEpochTime();
+    struct tm *timeInfo;
+    time_t rawTime = (time_t)epochTime;
+    timeInfo = localtime(&rawTime);
+    char formattedDate[11];
+    snprintf(formattedDate, sizeof(formattedDate), "%04d-%02d-%02d", timeInfo->tm_year + 1900, timeInfo->tm_mon + 1, timeInfo->tm_mday);
+    request += formattedDate;
+  }
   
   if(apiIndex == 4) {
     request += "&dates[]=";
@@ -153,6 +165,7 @@ void makeHTTPRequest() {
 
   while (client.available()) {
     String payload = client.readString();
+    Serial.print(payload);
     DynamicJsonDocument doc(43000);
     DeserializationError error = deserializeJson(doc, payload);
     JsonObject root = doc.as<JsonObject>();
@@ -211,29 +224,25 @@ void makeMlbRequest(JsonObject root) {
 }
 
 void makeNhlRequest(JsonObject root) {
-  JsonArray gamesByDate = root["gamesByDate"].as<JsonArray>();
-  int lastGameIndex = 0;
-  bool foundLastGame = false;
-  while(!foundLastGame) {
-    JsonObject currentGame = gamesByDate[lastGameIndex].as<JsonObject>();
-    String gameState = currentGame["games"][0]["gameState"].as<String>();
+  JsonArray games = root["games"].as<JsonArray>();
+  if(games.size() == 0) {
+    lcd.setCursor(0, 0);
+    lcd.print("No games");
+    lcd.setCursor(0, 1);
+    lcd.print("this week");
+  } else {
+    JsonObject currentGame = games[0].as<JsonObject>();
 
-    if(gameState.equals("FUT")) {
-      lastGameIndex = lastGameIndex - 1;
-      JsonObject lastGame = gamesByDate[lastGameIndex]["games"][0].as<JsonObject>();
-      JsonObject homeTeam = lastGame["homeTeam"].as<JsonObject>();
-      JsonObject awayTeam = lastGame["awayTeam"].as<JsonObject>();
+    JsonObject homeTeam = currentGame["homeTeam"].as<JsonObject>();
+    JsonObject awayTeam = currentGame["awayTeam"].as<JsonObject>();
 
-      int homeScore = homeTeam["score"].as<int>();
-      int awayScore = awayTeam["score"].as<int>();
+    int homeScore = homeTeam["score"].as<int>();
+    int awayScore = awayTeam["score"].as<int>();
 
-      String homeName = homeTeam["abbrev"].as<String>();
-      String awayName = awayTeam["abbrev"].as<String>();
+    String homeName = homeTeam["abbrev"].as<String>();
+    String awayName = awayTeam["abbrev"].as<String>();
 
-      printScores(homeName, awayName, homeScore, awayScore);
-      foundLastGame = true;
-    }
-    lastGameIndex++;
+    printScores(homeName, awayName, homeScore, awayScore);
   }
 }
 
